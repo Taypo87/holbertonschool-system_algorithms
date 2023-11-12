@@ -1,10 +1,6 @@
 #include "rb_trees.h"
 
 static int is_bst_r(rb_tree_t *node, int *last_val);
-//check is bst
-//check nodes, if red must not touch other red
-//check to ensure root is black
-//every path from NULL node has same number of black
 static int is_bst(rb_tree_t *tree)
 {
 	int last_val = INT_MIN;
@@ -23,15 +19,11 @@ static int is_bst_r(rb_tree_t *node, int *last_val)
 {
 	if (!node)
 		return (1);
-/*left check*/
 	if (!is_bst_r(node->left, last_val))
 		return (0);
-/*check self*/
 	if (*last_val >= node->n)
 		return (0);
-/*update last*/
 	*last_val = node->n;
-/*right check*/
 	return (is_bst_r(node->right, last_val));
 }
 /**
