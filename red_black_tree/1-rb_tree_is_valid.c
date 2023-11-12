@@ -4,8 +4,8 @@ static int is_bst_r(rb_tree_t *node, int *last_val);
 
 /**
  * is_bst - wrapper for is_bst_r
- * @node: root node pointer
- * @last_value: value of the previous node, starts at INT_MIN
+ * @tree: root node pointer
+ * Return: 1 if is bst, else 0
 */
 static int is_bst(rb_tree_t *tree)
 {
@@ -33,7 +33,7 @@ static int is_bst_r(rb_tree_t *node, int *last_val)
 }
 
 /**
- * color_check - checks node color, ensures red only have black connected
+ * color_check_r - checks node color, ensures red only have black connected
  * @node: root pointer in a tree, use root node to ensure proper checking
  * Return: 1 if tree uses Red_Black nodes in proper order, else 0
 */
