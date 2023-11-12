@@ -91,8 +91,11 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 	*node = *tree;
 
 	if (is_bst(node) && color_check_r(node) && check_black_height_r(node))
+	{
+		free(node);
 		return (1);
-	else
-		return (0);
+	}
+	free(node);
+	return (0);
 }
     
