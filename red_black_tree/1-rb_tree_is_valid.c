@@ -1,6 +1,12 @@
 #include "rb_trees.h"
 
 static int is_bst_r(rb_tree_t *node, int *last_val);
+
+/**
+ * is_bst - wrapper for is_bst_r
+ * @node: root node pointer
+ * @last_value: value of the previous node, starts at INT_MIN
+*/
 static int is_bst(rb_tree_t *tree)
 {
 	int last_val = INT_MIN;
@@ -14,7 +20,6 @@ static int is_bst(rb_tree_t *tree)
 * @last_val: value of the previous node;
 * Return: 1 if bst else 0
 */
-
 static int is_bst_r(rb_tree_t *node, int *last_val)
 {
 	if (!node)
@@ -26,9 +31,10 @@ static int is_bst_r(rb_tree_t *node, int *last_val)
 	*last_val = node->n;
 	return (is_bst_r(node->right, last_val));
 }
+
 /**
  * color_check - checks node color, ensures red only have black connected
- * @root: root pointer in a tree, use root node to ensure proper checking
+ * @node: root pointer in a tree, use root node to ensure proper checking
  * Return: 1 if tree uses Red_Black nodes in proper order, else 0
 */
 static int color_check_r(rb_tree_t *node)
@@ -55,7 +61,7 @@ static int color_check_r(rb_tree_t *node)
 
 }
 /**
- * check_path_r - checks the height of black nodes
+ * check_black_height_r - checks the height of black nodes
  * @tree: pointer to the root node of a tree
  * Return: height of black nodes or zero if not blanced
 */
@@ -82,7 +88,7 @@ static int check_black_height_r(rb_tree_t *tree)
 /**
  * rb_tree_is_valid - checks if a tree is valid Red_Black Tree
  * @tree: pointer to the root node of a tree.
- * 
+ * Return: 1 if valid tree, else 0
 */
 int rb_tree_is_valid(const rb_tree_t *tree)
 {
@@ -98,4 +104,3 @@ int rb_tree_is_valid(const rb_tree_t *tree)
 	free(node);
 	return (0);
 }
-    
