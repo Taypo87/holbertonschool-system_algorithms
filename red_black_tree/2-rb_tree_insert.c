@@ -5,7 +5,7 @@
  * @tree: pointer to the root of a tree
  * Return: pointer to the new root
 */
-/*
+
 static rb_tree_t *left_rotate(rb_tree_t *tree)
 {
 	rb_tree_t *new_root, *old_root, *old_left;
@@ -38,14 +38,14 @@ static rb_tree_t *left_rotate(rb_tree_t *tree)
 
 	return (new_root);
 }
-*/
+
 /**
  * binary_tree_rotate_right - balances a tree by rotating nodes right
  * @tree: pointer to the root of a tree
  * Return: pointer to the new root
 */
 
-/*
+
 static rb_tree_t *right_rotate(rb_tree_t *tree)
 {
 	rb_tree_t *old_root, *new_root, *old_right;
@@ -78,14 +78,14 @@ static rb_tree_t *right_rotate(rb_tree_t *tree)
 
 	return (new_root);
 }
-*/
+
 /**
  * insert_fixup - changes colors and rotates a tree until it meets rb specs
  * @root: pointer to the root of a tree
  * @new: the newly created node that was inserted
  * Return: pointer to the root of the tree
 */
-/*
+
 static rb_tree_t *insert_fixup(rb_tree_t *root, rb_tree_t *new)
 {
     rb_tree_t *uncle;
@@ -123,7 +123,6 @@ static rb_tree_t *insert_fixup(rb_tree_t *root, rb_tree_t *new)
     new->color = BLACK;
     return (root);
 }
-*/
 static rb_tree_t *bst_insert(rb_tree_t *root, rb_tree_t **new)
 {
     if (!new)
@@ -160,6 +159,6 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
     node = *tree;
     new = rb_tree_node(NULL, value, RED);
     node = bst_insert(node, &new);
-    //node = insert_fixup(node, new);
+    node = insert_fixup(node, new);
     return (node);
 }
