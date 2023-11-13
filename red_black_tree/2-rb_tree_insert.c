@@ -97,33 +97,38 @@ static rb_tree_t *insert_fixup(rb_tree_t *root, rb_tree_t *new)
             if (new->parent == new->parent->parent->left)
             {
                 uncle = new->parent->parent->right;
-                if (uncle->color == RED)
+
+                if (uncle && uncle->color == RED)
                 {
                     new->parent->color = BLACK;
                     uncle->color = BLACK;
                     new->parent->parent->color = RED;
                     new = new->parent->parent;
                 }
-                else if (new == new->parent->right)
+                else 
                 {
-                    new = new->parent;
-                    left_rotate(root);
+                    if (new == new->parent->right)
+                    {
+                        new = new->parent;
+                        root = left_rotate(root);
+                    }
                 }
                 if (new->parent)
                 {
                     new->parent->color = BLACK;
                     if (new->parent->parent)
+                    {
                         new->parent->parent->color = RED;
-                }
-                right_rotate(root);        
+                        root = right_rotate(root);
+                    }
+                }        
             }
             else
             {
-                root->color = BLACK;
+                new->parent->color = BLACK;
             }
         }
     }
-    else
     new->color = BLACK;
     return (root);
 }
@@ -165,5 +170,5 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
     node = bst_insert(node, &new);
     node = insert_fixup(node, new);
     *tree = node;
-    return (node);
+    return (new);
 }
