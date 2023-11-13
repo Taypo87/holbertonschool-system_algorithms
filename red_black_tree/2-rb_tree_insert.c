@@ -160,5 +160,6 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
     new = rb_tree_node(NULL, value, RED);
     node = bst_insert(node, &new);
     node = insert_fixup(node, new);
+    *tree = node;
     return (node);
 }
