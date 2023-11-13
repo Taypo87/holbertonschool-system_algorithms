@@ -109,8 +109,12 @@ static rb_tree_t *insert_fixup(rb_tree_t *root, rb_tree_t *new)
                     new = new->parent;
                     left_rotate(root);
                 }
-                new->parent->color = BLACK;
-                new->parent->parent->color = RED;
+                if (new->parent)
+                {
+                    new->parent->color = BLACK;
+                    if (new->parent->parent)
+                        new->parent->parent->color = RED;
+                }
                 right_rotate(root);        
             }
             else
