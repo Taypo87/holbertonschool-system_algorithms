@@ -155,6 +155,7 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
             is_outer = gather_family(family, new);
             goto out;
         }
+        //case 5
         if (parent_pointer->color == RED && uncle->color == BLACK && !is_outer)
         {
             right_rotate(parent_pointer);
@@ -163,6 +164,7 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
             is_outer = 1;
 
         }
+        //case 6
         if (parent_pointer->color == RED && uncle->color == BLACK && is_outer)
         {
             left_rotate(grandparent);
@@ -188,6 +190,7 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
  * update_family - updates all our "related" pointers
  * @family: 0 = tree_pos, 1 = parent_pointer, 2 = uncle, 3 = grandparent
  * @new: the newly created node that we added
+ * Return: the is_outer truth value
 */
 int static gather_family(rb_tree_t **family, rb_tree_t *new)
 {
