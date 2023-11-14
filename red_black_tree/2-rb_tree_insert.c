@@ -182,10 +182,6 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
         tree_pos->color = BLACK;
     return (tree_pos);
 }
-
-
-
-
 /**
  * update_family - updates all our "related" pointers
  * @family: 0 = tree_pos, 1 = parent_pointer, 2 = uncle, 3 = grandparent
