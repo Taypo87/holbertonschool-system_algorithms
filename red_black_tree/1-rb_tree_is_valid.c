@@ -15,7 +15,7 @@ static int is_bst(rb_tree_t *tree)
 }
 
 /**
-* is_bst_r - checks if a tree meets bst cirteria
+* is_bst_r - checks if a tree meets bst criteria
 * @node: pointer to a node in a tree
 * @last_val: value of the previous node;
 * Return: 1 if bst else 0
@@ -33,7 +33,7 @@ static int is_bst_r(rb_tree_t *node, int *last_val)
 }
 
 /**
- * color_check_r - checks node color, ensures red only have black connected
+ * color_check_r - checks if red only have black connected
  * @node: root pointer in a tree, use root node to ensure proper checking
  * Return: 1 if tree uses Red_Black nodes in proper order, else 0
 */
