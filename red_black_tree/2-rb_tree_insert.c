@@ -1,6 +1,6 @@
 #include "rb_trees.h"
 
-int static gather_family(rb_tree_t **family, rb_tree_t *new);
+static int gather_family(rb_tree_t *tree_pos, rb_tree_t **parent, rb_tree_t **uncle, rb_tree_t **gp);
 static rb_tree_t *get_uncle(rb_tree_t *tree_pos, int *is_outer);
 /**
  * binary_tree_rotate_left - balances a tree by rotating nodes left
@@ -94,7 +94,7 @@ static rb_tree_t *bst_insert(rb_tree_t *root, rb_tree_t **new)
 	if (!root)
 	{
 		root = *new;
-		return (root);
+		return (*new);
 	}
 	if ((*new)->n == root->n)
 	{
@@ -107,11 +107,11 @@ static rb_tree_t *bst_insert(rb_tree_t *root, rb_tree_t **new)
 		root->right = bst_insert(root->right, new);
 	else
 		root->left = bst_insert(root->left, new);
-
     if (root->right)
         root->right->parent = root;
     if (root->left)
         root->left->parent = root;
+
     return (root);
 
 }
@@ -120,9 +120,9 @@ static rb_tree_t *bst_insert(rb_tree_t *root, rb_tree_t **new)
  * @family: double pointer to the related pointers
  * Return: 1 is valid pointers, else 0
 */
-static int in_attendance(rb_tree_t **family)
+static int in_attendance(rb_tree_t *parent, rb_tree_t *uncle, rb_tree_t *grandparent)
 {
-    if(family[1] && family[2] && family[3])
+    if(parent && uncle && grandparent)
         return(1);
     else
         return (0);
@@ -135,24 +135,30 @@ static int in_attendance(rb_tree_t **family)
 */
 static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
 {
-    rb_tree_t *parent_pointer = NULL, *uncle = NULL, *grandparent = NULL, *tree_pos = NULL, **family = NULL;
+    rb_tree_t *parent_pointer = NULL, *uncle = NULL, *grandparent = NULL, *tree_pos = NULL; 
     int is_outer;
-    
-    family = (rb_tree_t *[]){tree_pos, parent_pointer, uncle, grandparent};
-    gather_family(family, new);
+
+    tree_pos = new;
+    gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
  out:   /*counseling session to remediate family(reb-black)tree problems*/
-    while (in_attendance(family))
+    while (in_attendance(parent_pointer, uncle, grandparent))
     {
         // case 1
         if (parent_pointer->color == BLACK)
-            return(root);
+        {
+            return (tree_pos);
+        }
+            
         // case 2
+        //printf("uncle 2 value is %d\n", uncle->n);
         if (parent_pointer->color == RED && uncle->color == RED)
         {
+            //printf("4th node should put us here %d\n", uncle->n);
             parent_pointer->color = BLACK;
             uncle->color = BLACK;
             grandparent->color = RED;
-            is_outer = gather_family(family, new);
+            tree_pos = grandparent;
+            is_outer = gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
             goto out;
         }
         //case 5
@@ -167,20 +173,37 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
         //case 6
         if (parent_pointer->color == RED && uncle->color == BLACK && is_outer)
         {
-            left_rotate(grandparent);
+            grandparent = left_rotate(grandparent);
             parent_pointer->color = BLACK;
             grandparent->color = RED;
             grandparent = parent_pointer;
         }
-        is_outer = gather_family(family, new);
+        tree_pos = grandparent;
+        is_outer = gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
     }
     // case 4
     if(parent_pointer)
-        if (!grandparent && parent_pointer->color == RED)
+    {
+        if (parent_pointer->color == RED)
+        {
             parent_pointer->color = BLACK;
+            if(!grandparent)
+                return (parent_pointer);
+            else
+                return (grandparent);
+        }
+    }
     else
         tree_pos->color = BLACK;
-    return (tree_pos);
+    
+    if(grandparent)
+        root = grandparent;
+    else if (parent_pointer)
+        root = parent_pointer;
+    else 
+        root = tree_pos;
+    
+    return (root);
 }
 /**
  * update_family - updates all our "related" pointers
@@ -188,31 +211,33 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
  * @new: the newly created node that we added
  * Return: the is_outer truth value
 */
-int static gather_family(rb_tree_t **family, rb_tree_t *new)
+static int gather_family(rb_tree_t *tree_pos, rb_tree_t **parent, rb_tree_t **uncle, rb_tree_t **gp)
 {
         int is_outer;
-        /*tree_pos*/
-        if (family[0])
-            family[0] = family[3];
-        else 
-            family[0] = new;
+        
         /*parent*/
-        if (family[0]->parent)
-            family[1] = family[0]->parent;
+        if (tree_pos->parent)
+            *parent = tree_pos->parent;
         else
         {
-            family[1] = NULL;
+            *parent = NULL;
         }
         /*uncle*/
-        family[2] = get_uncle(family[0], &is_outer);
+        *uncle = get_uncle(tree_pos, &is_outer);
+        if(!*uncle)
+            *uncle = NULL;
         /*grandparent*/
-        if(family[1])
-            if (family[1]->parent)
-                family[3] = family[1]->parent;
+        if(*parent)
+        {
+            if ((*parent)->parent)
+                *gp = (*parent)->parent;
+        }
         else
         {
-            family[3] = NULL;
+            *gp = NULL;
         }
+        if (!*gp)
+            *gp = NULL;
         return (is_outer);
 }
 
@@ -249,6 +274,13 @@ rb_tree_t *rb_tree_insert(rb_tree_t **tree, int value)
     node = *tree;
     new = rb_tree_node(NULL, value, RED);
     node = bst_insert(node, &new);
-    *tree = family_counseling(node, new);
+    node = family_counseling(node, new);
+    *tree = node;
+    if (!node)
+        printf("problem with root node not getting updated\n");
+    if (!new)
+        printf("problem with new node in gather family\n");
+    if (!(*tree))
+        printf("tree pointer wasn't updated\n");
     return (new);
 }
