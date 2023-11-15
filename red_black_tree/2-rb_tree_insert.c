@@ -143,17 +143,15 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
  out:   /*counseling session to remediate family(reb-black)tree problems*/
     while (in_attendance(parent_pointer, uncle, grandparent))
     {
-        // case 1
+        /* case 1 */
         if (parent_pointer->color == BLACK)
         {
             return (tree_pos);
         }
             
-        // case 2
-        //printf("uncle 2 value is %d\n", uncle->n);
+        /* case 2 */
         if (parent_pointer->color == RED && uncle->color == RED)
         {
-            //printf("4th node should put us here %d\n", uncle->n);
             parent_pointer->color = BLACK;
             uncle->color = BLACK;
             grandparent->color = RED;
@@ -161,7 +159,7 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
             is_outer = gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
             goto out;
         }
-        //case 5
+        /* case 5 */
         if (parent_pointer->color == RED && uncle->color == BLACK && !is_outer)
         {
             right_rotate(parent_pointer);
@@ -170,7 +168,7 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
             is_outer = 1;
 
         }
-        //case 6
+        /* case 6 */
         if (parent_pointer->color == RED && uncle->color == BLACK && is_outer)
         {
             grandparent = left_rotate(grandparent);
@@ -181,7 +179,7 @@ static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
         tree_pos = grandparent;
         is_outer = gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
     }
-    // case 4
+    /* case 4 */
     if(parent_pointer)
     {
         if (parent_pointer->color == RED)
