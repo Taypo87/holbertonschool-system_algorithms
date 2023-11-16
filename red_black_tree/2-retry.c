@@ -160,33 +160,33 @@ out:
             gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
             goto out;
         }
-        if (parent_pointer->color == RED && uncle->color == BLACK)
+        if (parent_pointer->color == RED && (uncle->color == BLACK || !uncle))
         {
             if (is_left_child(parent_pointer) && is_left_child(tree_pos))
             {
                 parent_pointer->color = BLACK;
                 grandparent->color = RED;
-                right_rotate(grandparent);
+                grandparent = right_rotate(grandparent);
             }
             if (is_left_child(parent_pointer) && !is_left_child(tree_pos))
             {
                 tree_pos->color = BLACK;
                 grandparent->color = RED;
-                left_rotate(parent_pointer);
-                right_rotate(grandparent);
+                parent_pointer = left_rotate(parent_pointer);
+                grandparent = right_rotate(grandparent);
             }
             if (!is_left_child(parent_pointer) && !is_left_child(tree_pos))
             {
                 parent_pointer->color = BLACK;
                 grandparent->color = RED;
-                left_rotate(grandparent);
+                grandparent = left_rotate(grandparent);
             }
             if (!is_left_child(parent_pointer) && is_left_child(tree_pos))
             {
                 tree_pos->color = BLACK;
                 grandparent->color = RED;
-                right_rotate(parent_pointer);
-                left_rotate(grandparent);
+                parent_pointer = right_rotate(parent_pointer);
+                grandparent = left_rotate(grandparent);
             }
         }
         tree_pos = grandparent;
