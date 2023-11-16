@@ -8,6 +8,7 @@ rb_tree_t *array_to_rb_tree(int *array, size_t size)
     while (i < size)
     {
         rb_tree_insert(&node, array[i]);
+        i++;
     }
     return (node);
 }
