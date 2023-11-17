@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 
 /**
@@ -14,8 +15,8 @@
  */
 typedef enum edge_type_e
 {
-    UNIDIRECTIONAL = 0,
-    BIDIRECTIONAL
+	UNIDIRECTIONAL = 0,
+	BIDIRECTIONAL
 } edge_type_t;
 
 /* Define the structure temporarily for usage in the edge_t */
@@ -30,8 +31,8 @@ typedef struct vertex_s vertex_t;
  */
 typedef struct edge_s
 {
-    vertex_t    *dest;
-    struct edge_s   *next;
+	vertex_t	*dest;
+	struct edge_s   *next;
 } edge_t;
 
 
@@ -48,11 +49,11 @@ typedef struct edge_s
  */
 struct vertex_s
 {
-    size_t      index;
-    char        *content;
-    size_t      nb_edges;
-    edge_t      *edges;
-    struct vertex_s *next;
+	size_t	  index;
+	char		*content;
+	size_t	  nb_edges;
+	edge_t	  *edges;
+	struct vertex_s *next;
 };
 
 /**
@@ -64,8 +65,8 @@ struct vertex_s
  */
 typedef struct graph_s
 {
-    size_t      nb_vertices;
-    vertex_t    *vertices;
+	size_t	  nb_vertices;
+	vertex_t	*vertices;
 } graph_t;
 
 
