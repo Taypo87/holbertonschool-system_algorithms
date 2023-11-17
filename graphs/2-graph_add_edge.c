@@ -58,7 +58,6 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
         else
         {
             temp = ptrs->destination->edges;
-            //free(edge2);
             edge2 = temp;
             while (temp->next)
             {   
