@@ -13,7 +13,6 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 	if(!str)
 		return (NULL);
 	new = malloc(sizeof(vertex_t));
-	new->content = strdup(str);
 	new->edges = NULL;
 	new->index = 0;
 	new->nb_edges = 0;
@@ -38,6 +37,7 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 				free(new);
 				return (NULL);
 			}
+			new->content = strdup(str);
 		}
 		temp->next = new;
 	}
