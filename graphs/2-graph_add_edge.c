@@ -35,7 +35,6 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
     else
     {
         temp = ptrs->source->edges;
-        //free(edge);
         while (temp->next)
         {
             temp = temp->next;
@@ -44,7 +43,6 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
         temp = temp->next;
         temp->dest = ptrs->destination;
         temp->next = NULL;
-        //edge->next = temp;
 
         ptrs->source->nb_edges++;
     }
@@ -80,10 +78,11 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
 
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
 {
+    graph_p *ptrs = NULL;
+
     if (!graph || !src || !dest)
         return (0);
     
-    graph_p *ptrs = NULL;
     ptrs = malloc(sizeof(graph_p));
     ptrs->node = graph->vertices; 
     if (!initialize_ptrs(ptrs, src, dest))
