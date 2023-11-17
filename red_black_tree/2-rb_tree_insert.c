@@ -7,64 +7,75 @@ static rb_tree_t *get_uncle(rb_tree_t *tree_pos, int *is_outer);
  * @tree: pointer to the root of a tree
  * Return: pointer to the new root
 */
-static rb_tree_t *left_rotate(rb_tree_t **tree)
+static rb_tree_t *left_rotate(rb_tree_t *tree)
 {
-    if (!tree || !(*tree) || !(*tree)->right)
-        return *tree;
+	rb_tree_t *new_root, *old_root, *old_left;
 
-    rb_tree_t *new_root = (*tree)->right;
-    (*tree)->right = new_root->left;
+	if (tree == NULL || tree->right == NULL)
+		return (tree);
 
-    if (new_root->left)
-        new_root->left->parent = *tree;
+	old_root = tree;
+	new_root = tree->right;
+	if (tree->right->left)
+	{
+		old_left = tree->right->left;
+		old_left->parent = old_root;
+		old_root->right = old_left;
+	}
+	else
+		old_root->right = NULL;
+	if (old_root->parent)
+	{
+		if (old_root == old_root->parent->left)
+		{
+			old_root->parent->left = new_root;
+		}
+		else
+			old_root->parent->right = new_root;
+	}
+	new_root->parent = old_root->parent;
+	old_root->parent = new_root;
+	new_root->left = old_root;
 
-    new_root->parent = (*tree)->parent;
-
-    if (!new_root->parent)
-        *tree = new_root;
-    else if (*tree == (*tree)->parent->right)
-        (*tree)->parent->right = new_root;
-    else
-        (*tree)->parent->left = new_root;
-
-    new_root->left = *tree;
-    (*tree)->parent = new_root;
-
-    return new_root;
+	return (new_root);
 }
-
 /**
  * binary_tree_rotate_right - balances a tree by rotating nodes right
  * @tree: pointer to the root of a tree
  * Return: pointer to the new root
 */
-static rb_tree_t *right_rotate(rb_tree_t **tree)
+static rb_tree_t *right_rotate(rb_tree_t *tree)
 {
-    if (!tree || !(*tree) || !(*tree)->left)
-        return *tree;
+	rb_tree_t *old_root, *new_root, *old_right;
 
-    rb_tree_t *new_root = (*tree)->left;
-    (*tree)->left = new_root->right;
+	if (tree == NULL || tree->left == NULL)
+		return (tree);
 
-    if (new_root->right)
-        new_root->right->parent = *tree;
+	old_root = tree;
+	new_root = tree->left;
+	if (tree->left->right)
+	{
+		old_right = tree->left->right;
+		old_right->parent = old_root;
+		old_root->left = old_right;
+	}
+	else
+		old_root->left = NULL;
+	if (old_root->parent)
+	{
+		if (old_root == old_root->parent->left)
+		{
+			old_root->parent->left = new_root;
+		}
+		else
+			old_root->parent->right = new_root;
+	}
+	new_root->parent = tree->parent;
+	new_root->right = old_root;
+	old_root->parent = new_root;
 
-    new_root->parent = (*tree)->parent;
-
-    if (!new_root->parent)
-        *tree = new_root;
-    else if (*tree == (*tree)->parent->left)
-        (*tree)->parent->left = new_root;
-    else
-        (*tree)->parent->right = new_root;
-
-    new_root->right = *tree;
-    (*tree)->parent = new_root;
-
-    return new_root;
+	return (new_root);
 }
-
-
 /**
  * bst_insert - inserts a node in order on a given tree 
  * @root: pointer to the root node of a tree
@@ -83,6 +94,7 @@ static rb_tree_t *bst_insert(rb_tree_t *root, rb_tree_t **new)
 	if ((*new)->n == root->n)
 	{
 		free(*new);
+        *new = NULL;
 		return (root);
 	}
 	(*new)->parent = root;
@@ -104,12 +116,20 @@ static rb_tree_t *bst_insert(rb_tree_t *root, rb_tree_t **new)
  * @family: double pointer to the related pointers
  * Return: 1 is valid pointers, else 0
 */
-static int in_attendance(rb_tree_t *parent, rb_tree_t *uncle, rb_tree_t *grandparent)
+static int in_attendance(rb_tree_t *parent, rb_tree_t *grandparent)
 {
-    if(parent && uncle && grandparent)
+    if(parent && grandparent)
         return(1);
     else
         return (0);
+}
+static int is_left_child(rb_tree_t *node)
+{
+    if(!node->parent)
+        return (0);
+    if (!node->parent->left)
+        return (0);
+    return (node->parent->left == node);
 }
 /**
  * family_counseling - fixes a red-black tree after new node is added
@@ -119,73 +139,74 @@ static int in_attendance(rb_tree_t *parent, rb_tree_t *uncle, rb_tree_t *grandpa
 */
 static rb_tree_t *family_counseling(rb_tree_t *root, rb_tree_t *new)
 {
-    rb_tree_t *parent_pointer = NULL, *uncle = NULL, *grandparent = NULL, *tree_pos = NULL; 
-    int is_outer;
+    rb_tree_t *parent_pointer = NULL, *uncle = NULL, *grandparent = NULL, *tree_pos = NULL;
 
+    if(!new)
+        return(root);
     tree_pos = new;
     gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
- out:   /*counseling session to remediate family(reb-black)tree problems*/
-    while (in_attendance(parent_pointer, uncle, grandparent))
+    if (!parent_pointer)
     {
-        /* case 1 */
-        if (parent_pointer->color == BLACK)
-        {
-            return (tree_pos);
-        }
-            
-        /* case 2 */
-        if (parent_pointer->color == RED && uncle->color == RED)
+        tree_pos->color = BLACK;
+        root = tree_pos;
+        return (root);
+    }
+
+    while (in_attendance(parent_pointer, grandparent))
+    {
+        if (parent_pointer->color == RED && (uncle && uncle->color == RED))
         {
             parent_pointer->color = BLACK;
             uncle->color = BLACK;
             grandparent->color = RED;
             tree_pos = grandparent;
-            is_outer = gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
-            goto out;
+            gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
+            continue;
         }
-        /* case 5 */
-        if (parent_pointer->color == RED && uncle->color == BLACK && !is_outer)
+        if (parent_pointer->color == RED && (!uncle || uncle->color == BLACK))
         {
-            right_rotate(&parent_pointer);
-            tree_pos = parent_pointer;
-            parent_pointer = grandparent->left;
-            is_outer = 1;
-
-        }
-        /* case 6 */
-        if (parent_pointer->color == RED && uncle->color == BLACK && is_outer)
-        {
-            grandparent = left_rotate(&grandparent);
-            parent_pointer->color = BLACK;
-            grandparent->color = RED;
-            grandparent = parent_pointer;
+            if (is_left_child(parent_pointer) && is_left_child(tree_pos))
+            {
+                parent_pointer->color = BLACK;
+                grandparent->color = RED;
+                right_rotate(grandparent);
+            }
+            if (is_left_child(parent_pointer) && !is_left_child(tree_pos))
+            {
+                tree_pos->color = BLACK;
+                grandparent->color = RED;
+                left_rotate(parent_pointer);
+                right_rotate(grandparent);
+            }
+            if (!is_left_child(parent_pointer) && !is_left_child(tree_pos))
+            {
+                parent_pointer->color = BLACK;
+                grandparent->color = RED;
+                left_rotate(grandparent);
+            }
+            if (!is_left_child(parent_pointer) && is_left_child(tree_pos))
+            {
+                tree_pos->color = BLACK;
+                grandparent->color = RED;
+                right_rotate(parent_pointer);
+                left_rotate(grandparent);
+            }
         }
         tree_pos = grandparent;
-        is_outer = gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
+        gather_family(tree_pos, &parent_pointer, &uncle, &grandparent);
     }
-    /* case 4 */
+   
     if(parent_pointer)
     {
         if (parent_pointer->color == RED)
-        {
-            parent_pointer->color = BLACK;
-            if(!grandparent)
-                return (parent_pointer);
-            else
-                return (grandparent);
-        }
-    }
-    else
-        tree_pos->color = BLACK;
-    
-    if(grandparent)
-        root = grandparent;
-    else if (parent_pointer)
+            tree_pos->color = BLACK;
         root = parent_pointer;
-    else 
+    }     
+    else
         root = tree_pos;
-    
+    root->color = BLACK;
     return (root);
+
 }
 /**
  * update_family - updates all our "related" pointers
@@ -211,8 +232,7 @@ static int gather_family(rb_tree_t *tree_pos, rb_tree_t **parent, rb_tree_t **un
         /*grandparent*/
         if(*parent)
         {
-            if ((*parent)->parent)
-                *gp = (*parent)->parent;
+            *gp = (*parent)->parent;
         }
         else
         {
