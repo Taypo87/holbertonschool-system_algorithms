@@ -9,6 +9,9 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
 	vertex_t *new, *temp;
 
+
+	if(!str)
+		return (NULL);
 	new = malloc(sizeof(vertex_t));
 	new->content = strdup(str);
 	new->edges = NULL;
@@ -23,7 +26,7 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 		temp = graph->vertices;
 		if (strcmp(temp->content, str) == 0)
 		{
-			free (new);
+			free(new);
 			return (NULL);
 		}
 		while (temp->next)
@@ -32,7 +35,7 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 			new->index++;
 			if (strcmp(temp->content, str) == 0)
 			{
-				free (new);
+				free(new);
 				return (NULL);
 			}
 		}
