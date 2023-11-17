@@ -37,8 +37,8 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 				free(new);
 				return (NULL);
 			}
-			new->content = strdup(str);
 		}
+		new->content = strdup(str);
 		temp->next = new;
 	}
 	graph->nb_vertices += 1;
