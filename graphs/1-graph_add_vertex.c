@@ -3,7 +3,7 @@
  * graph_add_vertex - adds a new node to a graph
  * @graph: the graph to add a new node to
  * @str: string to be stored in the node
- * Return: pointer to the updated graph
+ * Return: pointer to the new node
 */
 vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
@@ -33,5 +33,5 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 		temp->next = new;
 	}
 	graph->nb_vertices++;
-	return (graph);
+	return (new);
 }
