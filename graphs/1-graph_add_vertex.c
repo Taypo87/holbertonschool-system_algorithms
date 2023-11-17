@@ -9,7 +9,6 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
 	vertex_t *new, *temp;
 
-
 	if (!str)
 		return (NULL);
 	if (!graph)
@@ -24,29 +23,26 @@ vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 		new->content = strdup(str);
 		graph->vertices = new;
 	}
-	
-	else
+
+	new->index++;
+	temp = graph->vertices;
+	if (strcmp(temp->content, str) == 0)
 	{
+		free(new);
+		return (NULL);
+	}
+	while (temp->next)
+	{
+		temp = temp->next;
 		new->index++;
-		temp = graph->vertices;
 		if (strcmp(temp->content, str) == 0)
 		{
 			free(new);
 			return (NULL);
 		}
-		while (temp->next)
-		{
-			temp = temp->next;
-			new->index++;
-			if (strcmp(temp->content, str) == 0)
-			{
-				free(new);
-				return (NULL);
-			}
-		}
-		new->content = strdup(str);
-		temp->next = new;
 	}
+	new->content = strdup(str);
+	temp->next = new;
 	graph->nb_vertices += 1;
 	return (new);
 }
