@@ -69,6 +69,12 @@ typedef struct graph_s
 	vertex_t	*vertices;
 } graph_t;
 
+
+/**
+ * graph_ptrs - my graph pointers in a struct
+ * 
+ * 
+*/
 typedef struct graph_ptrs
 {
     vertex_t *node;
@@ -81,6 +87,7 @@ graph_t *graph_create(void);
 vertex_t *graph_add_vertex(graph_t *graph, const char *str);
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type);
 void graph_display(const graph_t *graph);
+void graph_delete(graph_t *graph);
 
 #endif
 
