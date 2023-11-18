@@ -6,10 +6,9 @@
  * @str: the key for the vertex
  * Return: pointer to the vertex or NULL if not found
 */
-static vertex_t *get_vertex(graph_t  *graph, const char * str)
+static vertex_t *get_vertex(graph_t  *graph, const char *str)
 {
 	vertex_t *temp;
-
 
 	temp = graph->vertices;
 	while (temp)
@@ -32,12 +31,13 @@ static void set_edge(vertex_t *src, vertex_t *dest)
 {
 
 	edge_t *new = malloc(sizeof(edge_t)), *temp;
+
 	new->dest = dest;
 	new->next = NULL;
 	if (!src->edges)
 		src->edges = new;
 	else
-	{   
+	{  
 		temp = src->edges;
 		while (temp->next)
 		{
@@ -55,18 +55,15 @@ static void set_edge(vertex_t *src, vertex_t *dest)
  * @type: the type of connection
  * Return: 1 on success else 0
 */
-int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
+int graph_add_edge(graph_t *graph, const char *src,
+					const char *dest, edge_type_t type)
 {
 	vertex_t *source = NULL, *destination = NULL;
 
-	if (!graph)
+	if (!graph || !src || !dest)
 		return (0);
 	source = get_vertex(graph, src);
-	if(!source)
-		return (0);
 	destination = get_vertex(graph, dest);
-	if (!destination)
-		return (0);
 	set_edge(source, destination);
 	if (type == BIDIRECTIONAL)
 		set_edge(destination, source);
