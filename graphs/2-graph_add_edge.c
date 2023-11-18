@@ -75,6 +75,8 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
             ptrs->destination->nb_edges++;
         }
     }
+    else
+        free(edge2);
     return (1);
 }
 
