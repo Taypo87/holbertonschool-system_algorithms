@@ -19,7 +19,10 @@ static graph_p *initialize_ptrs(graph_p *ptrs, const char *src, const char* dest
 		temp = temp->next;
 	}
 	if (!ptrs->source || !ptrs->destination)
-		return (NULL);
+    {
+        free(ptrs);
+        return(NULL);
+    }
 	return (ptrs);
 }
 
