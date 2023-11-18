@@ -31,7 +31,7 @@ static void set_edge(vertex_t *src, vertex_t *dest)
         {
             temp = temp->next;
         }
-        src->edges->next = new;
+        temp->next = new;
     }
 }
 
