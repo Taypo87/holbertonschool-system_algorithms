@@ -3,7 +3,7 @@
 
 static graph_p *initialize_ptrs(graph_p *ptrs, const char *src, const char* dest)
 {
-	vertex_t *temp;
+	vertex_t *temp = NULL;
 
 	temp = ptrs->node;
 	while (temp)
