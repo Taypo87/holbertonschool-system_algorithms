@@ -28,6 +28,8 @@ void graph_delete(graph_t *graph)
 		temp = temp->next;
 		free(temp2);
 	}
+	free(temp);
+	free(edges);
 	free(graph);
 
 }
