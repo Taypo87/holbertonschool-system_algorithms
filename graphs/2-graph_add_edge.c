@@ -19,21 +19,20 @@ static vertex_t *get_vertex(graph_t  *graph, const char * str)
 static void set_edge(vertex_t *src, vertex_t *dest)
 {
 
-    edge_t *new = malloc(sizeof(edge_t));
+    edge_t *new = malloc(sizeof(edge_t)), *temp;
     new->dest = dest;
     new->next = NULL;
     if (!src->edges)
         src->edges = new;
     else
-    {
-        while (src->edges)
+    {   
+        temp = src->edges;
+        while (temp->next)
         {
-            src->edges = src->edges->next;
+            temp = temp->next;
         }
-        src->edges = new;
+        src->edges->next = new;
     }
-    
-
 }
 
 
