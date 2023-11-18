@@ -38,7 +38,7 @@ static void set_edge(vertex_t *src, vertex_t *dest)
 
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
 {
-    vertex_t *source, *destination;
+    vertex_t *source = NULL, *destination = NULL;
 
     if (!graph)
         return (0);
