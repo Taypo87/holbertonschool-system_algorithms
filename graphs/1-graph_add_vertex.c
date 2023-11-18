@@ -8,9 +8,10 @@
 vertex_t *graph_add_vertex(graph_t *graph, const char *str)
 {
 	vertex_t *new, *temp;
-
+	
 	if (!str || !graph)
 		return (NULL);
+
 	new = malloc(sizeof(vertex_t));
 	new->edges = NULL;
 	new->index = 0;

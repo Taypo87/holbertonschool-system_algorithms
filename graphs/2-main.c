@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -34,7 +35,7 @@ int main(void)
 		}
 	}
 
-	if (!graph_add_edge(graph, _names[0], _names[1], UNIDIRECTIONAL))
+	if (!graph_add_edge(graph, _names[0], _names[1], BIDIRECTIONAL))
 	{
 		printf("Failed to add edge between ");
 		printf("%s and %s\n", _names[0], _names[1]);
@@ -42,7 +43,7 @@ int main(void)
 	}
 
 	graph_display(graph);
-	//graph_delete(graph);
+    graph_delete(graph);
 
 	return (EXIT_SUCCESS);
 }
