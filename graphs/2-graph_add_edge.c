@@ -97,9 +97,10 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
 		return (0);
 	
 	ptrs = malloc(sizeof(graph_p));
-	ptrs->node = graph->vertices; 
-	if (!initialize_ptrs(ptrs, src, dest))
-		return (0);
+	ptrs->node = graph->vertices;
+    if (graph->vertices)
+	    if (!initialize_ptrs(ptrs, src, dest))
+		    return (0);
 	if (!set_edge(ptrs, type, edge, edge2, temp))
 		{
 			free(ptrs);
