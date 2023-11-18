@@ -12,18 +12,13 @@ void graph_delete(graph_t *graph)
 
 	if (!graph)
 		return;
-	if (!graph->vertices)
-	{
-		free(graph);
-		return;
-	}
 	temp = graph->vertices;
-	if (temp->edges)
-		edges = temp->edges;
+	
 	while (temp)
 	{
 		temp2 = temp;
-		temp = temp->next;
+		edges = temp->edges;
+		
 		while (edges)
 		{
 			edge_temp = edges;
@@ -31,6 +26,8 @@ void graph_delete(graph_t *graph)
 			free(edge_temp->dest);
 			free(edge_temp);
 		}
+		temp = temp->next;
+		
 		free(temp2);
 	}
 	free(graph);
