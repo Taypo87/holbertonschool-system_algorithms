@@ -80,6 +80,8 @@ static int set_edge(graph_p *ptrs, edge_type_t type, edge_t *edge, edge_t *edge2
 	}
     if (temp && temp != ptrs->destination->edges)
 		free(temp);
+    if (edge2 && edge2 != ptrs->destination->edges)
+        free(edge2);
 	return (1);
 }
 
