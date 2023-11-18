@@ -22,7 +22,6 @@ static graph_p *initialize_ptrs(graph_p *ptrs, const char *src, const char* dest
     {
         free(ptrs);
         ptrs = NULL;
-        return(NULL);
     }
 	return (ptrs);
 }
