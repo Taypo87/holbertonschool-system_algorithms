@@ -20,6 +20,8 @@ static void set_edge(vertex_t *src, vertex_t *dest)
 {
 
     edge_t *new = malloc(sizeof(edge_t));
+    new->dest = dest;
+    new->next = NULL;
     if (!src->edges)
         src->edges = new;
     else
@@ -30,8 +32,7 @@ static void set_edge(vertex_t *src, vertex_t *dest)
         }
         src->edges = new;
     }
-    new->dest = dest;
-    new->next = NULL;
+    
 
 }
 
