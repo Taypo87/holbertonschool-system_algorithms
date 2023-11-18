@@ -85,7 +85,7 @@ static int set_edge(graph_p *ptrs, edge_type_t type, edge_t *edge, edge_t *edge2
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
 {
     graph_p *ptrs = NULL;
-    edge_t *edge, *edge2, *temp;
+    edge_t *edge = NULL, *edge2 = NULL, *temp = NULL;
 
     if (!graph || !src || !dest)
         return (0);
