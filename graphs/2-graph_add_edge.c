@@ -82,6 +82,7 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
         free(edge2);
         edge2 = NULL;
     }
+    free(edge);
     return (1);
 }
 
