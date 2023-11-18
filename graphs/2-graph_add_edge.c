@@ -49,6 +49,7 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
 
         ptrs->source->nb_edges++;
     }
+
     if (type == BIDIRECTIONAL)
     {
         if (!ptrs->destination->edges)
@@ -60,6 +61,8 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
         }
         else
         {
+            if(temp)
+                free(temp);
             temp = ptrs->destination->edges;
             edge2 = temp;
             while (temp->next)
