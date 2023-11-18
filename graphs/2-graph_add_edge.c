@@ -23,16 +23,16 @@ static graph_p *initialize_ptrs(graph_p *ptrs, const char *src, const char* dest
     return (ptrs);
 }
 
-static int set_edge(graph_p *ptrs, edge_type_t type)
+static int set_edge(graph_p *ptrs, edge_type_t type, edge_t *edge, edge_t *edge2, edge_t *temp)
 {
-    edge_t *edge = malloc(sizeof(edge_t)), *temp;
-    edge_t *edge2 = malloc(sizeof(edge_t));
-        
+
+    edge = malloc(sizeof(edge_t));
+    edge2 = malloc(sizeof(edge_t));
     if (!ptrs->source->edges)
     {
         edge->dest = ptrs->destination;
         edge->next = NULL;
-        *ptrs->source->edges = *edge;
+        ptrs->source->edges = edge;
         ptrs->source->nb_edges++;
     }
     else
@@ -78,17 +78,14 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
             ptrs->destination->nb_edges++;
         }
     }
-    else {
-        free(edge2);
-        edge2 = NULL;
-    }
-    free(edge);
+    
     return (1);
 }
 
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
 {
     graph_p *ptrs = NULL;
+    edge_t *edge, *edge2, *temp;
 
     if (!graph || !src || !dest)
         return (0);
@@ -97,11 +94,14 @@ int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_
     ptrs->node = graph->vertices; 
     if (!initialize_ptrs(ptrs, src, dest))
         return (0);
-    if (!set_edge(ptrs, type))
+    if (!set_edge(ptrs, type, edge, edge2, temp))
         {
             free(ptrs);
             return (0);
         }
+    free(edge);
+    free(edge2);
+    free(temp);
     free(ptrs);
     return (1);
 
