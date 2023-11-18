@@ -18,7 +18,6 @@ void graph_delete(graph_t *graph)
 	{
 		temp2 = temp;
 		edges = temp->edges;
-		
 		while (edges)
 		{
 			edge_temp = edges;
@@ -27,7 +26,6 @@ void graph_delete(graph_t *graph)
 			free(edge_temp);
 		}
 		temp = temp->next;
-		
 		free(temp2);
 	}
 	free(graph);
