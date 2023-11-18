@@ -37,7 +37,7 @@ static void set_edge(vertex_t *src, vertex_t *dest)
 	if (!src->edges)
 		src->edges = new;
 	else
-	{  
+	{
 		temp = src->edges;
 		while (temp->next)
 		{
@@ -64,6 +64,8 @@ int graph_add_edge(graph_t *graph, const char *src,
 		return (0);
 	source = get_vertex(graph, src);
 	destination = get_vertex(graph, dest);
+	if (!source || !destination)
+		return (0);
 	set_edge(source, destination);
 	if (type == BIDIRECTIONAL)
 		set_edge(destination, source);
