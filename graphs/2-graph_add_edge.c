@@ -26,8 +26,7 @@ static graph_p *initialize_ptrs(graph_p *ptrs, const char *src, const char* dest
 static int set_edge(graph_p *ptrs, edge_type_t type, edge_t *edge, edge_t *edge2, edge_t *temp)
 {
 
-	edge = malloc(sizeof(edge_t));
-	edge2 = malloc(sizeof(edge_t));
+	
 	if (!ptrs->source->edges)
 	{
 		edge->dest = ptrs->destination;
@@ -42,7 +41,6 @@ static int set_edge(graph_p *ptrs, edge_type_t type, edge_t *edge, edge_t *edge2
 		{
 			temp = temp->next;
 		}
-		temp->next = malloc(sizeof(edge_t));
 		temp = temp->next;
 		temp->dest = ptrs->destination;
 		temp->next = NULL;
@@ -78,8 +76,6 @@ static int set_edge(graph_p *ptrs, edge_type_t type, edge_t *edge, edge_t *edge2
 			ptrs->destination->nb_edges++;
 		}
 	}
-	if(temp)
-        free(temp);
 	return (1);
 }
 
