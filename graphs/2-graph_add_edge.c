@@ -32,7 +32,7 @@ static int set_edge(graph_p *ptrs, edge_type_t type)
     {
         edge->dest = ptrs->destination;
         edge->next = NULL;
-        ptrs->source->edges = edge;
+        *ptrs->source->edges = *edge;
         ptrs->source->nb_edges++;
     }
     else
