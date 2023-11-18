@@ -19,7 +19,7 @@ static vertex_t *get_vertex(graph_t  *graph, const char * str)
 static void set_edge(vertex_t *src, vertex_t *dest)
 {
 
-    edge_t *new = malloc(sizeof(edge_t)), *temp = NULL;
+    edge_t *new = malloc(sizeof(edge_t));
     if (!src->edges)
         src->edges = new;
     else
@@ -38,7 +38,7 @@ static void set_edge(vertex_t *src, vertex_t *dest)
 
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type)
 {
-    vertex_t *temp, *source, *destination;
+    vertex_t *source, *destination;
 
     if (!graph)
         return (0);
