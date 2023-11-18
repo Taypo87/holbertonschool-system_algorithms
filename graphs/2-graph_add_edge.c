@@ -3,17 +3,20 @@
 
 static graph_p *initialize_ptrs(graph_p *ptrs, const char *src, const char* dest)
 {
-    while (ptrs->node)
+    vertex_t *temp;
+
+    temp = ptrs->node;
+    while (temp)
     {
-        if (strcmp(ptrs->node->content, src) == 0)
+        if (strcmp(temp->content, src) == 0)
         {
-            ptrs->source = ptrs->node;
+            ptrs->source = temp;
         }
-        if (strcmp(ptrs->node->content, dest) == 0)
+        if (strcmp(temp->content, dest) == 0)
         {
-            ptrs->destination = ptrs->node;
+            ptrs->destination = temp;
         }
-        ptrs->node = ptrs->node->next;
+        temp = temp->next;
     }
     if (!ptrs->source || !ptrs->destination)
         return (NULL);
