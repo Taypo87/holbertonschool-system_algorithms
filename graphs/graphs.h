@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include <string.h>
 
-
 /**
  * enum edge_type_e - Enumerates the different types of
  * connection between two vertices
@@ -32,7 +31,7 @@ typedef struct vertex_s vertex_t;
 typedef struct edge_s
 {
 	vertex_t	*dest;
-	struct edge_s   *next;
+	struct edge_s   *next;    
 } edge_t;
 
 
@@ -69,25 +68,22 @@ typedef struct graph_s
 	vertex_t	*vertices;
 } graph_t;
 
+typedef struct stack_t queue_t;
 
-/**
- * graph_ptrs - my graph pointers in a struct
- * 
- * 
-*/
-typedef struct graph_ptrs
-{
-    vertex_t *node;
-    vertex_t *source;
-    vertex_t *destination;
-} graph_p;
-
+typedef struct stack_t {
+    vertex_t *vertice;
+    struct stack_t *next;
+	struct stack_t *prev;
+    size_t depth;
+} stack_t;
 
 graph_t *graph_create(void);
 vertex_t *graph_add_vertex(graph_t *graph, const char *str);
 int graph_add_edge(graph_t *graph, const char *src, const char *dest, edge_type_t type);
 void graph_display(const graph_t *graph);
 void graph_delete(graph_t *graph);
+size_t depth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
+size_t breadth_first_traverse(const graph_t *graph, void (*action)(const vertex_t *v, size_t depth));
 
 #endif
 
