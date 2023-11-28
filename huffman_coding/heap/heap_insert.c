@@ -16,7 +16,6 @@ static binary_tree_node_t *node_swap(binary_tree_node_t *parent, binary_tree_nod
 
 static void value_check(binary_tree_node_t *node)
 {
-	binary_tree_node_t *temp;
 
 	if (node->parent->data > node->data)
 		node->parent = node_swap(node->parent, node);
@@ -25,7 +24,6 @@ static void value_check(binary_tree_node_t *node)
 
 static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root, binary_tree_node_t *new_node)
 {
-	binary_tree_node_t *node = NULL;
 
 	if(root->right && root->left)
 	{
