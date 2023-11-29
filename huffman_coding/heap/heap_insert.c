@@ -1,51 +1,66 @@
 #include "heap.h"
+
+
 static binary_tree_node_t *node_swap(binary_tree_node_t *parent, binary_tree_node_t *node)
 {
-	binary_tree_node_t *temp;
+	void *temp;
 
-	temp = parent;
+	temp = parent->data;
+	parent->data = node->data;
+	node->data = temp;
 
-	parent->left = node->left;
-	parent->right = node->right;
-	parent->parent = node;
-	node->left = temp->left;
-	node->right = temp->right;
-	node->parent = temp->parent;
 	return (parent);
 }
 
-static void value_check(binary_tree_node_t *node)
+static binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
 {
 
-	if (node->parent->data > node->data)
-		node->parent = node_swap(node->parent, node);
-	value_check(node->parent);
+	while(node->parent)
+	{
+		if(heap->data_cmp(node->data, node->parent->data) < 0)
+			node = node_swap(node->parent, node);
+		else
+			break;
+	}
+	return (node);
 }
+
 
 static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root, binary_tree_node_t *new_node)
 {
+	binary_tree_node_t *queue[100];
 
-	if(root->right && root->left)
+	int insertion = -1, operation = 0;
+
+	queue[++insertion] = root;
+	for (; ; operation++)
 	{
-		insert_bottom_left(root->left, new_node);
-		insert_bottom_left(root->right, new_node);
+		if(!queue[operation]->left)
+		{
+			new_node->parent = queue[operation];
+			queue[operation]->left = new_node;
+			break;
+		}
+		else if(!queue[operation]->right)
+		{
+			new_node->parent = queue[operation];
+			queue[operation]->right = new_node;
+			break;
+		}
+		else
+		{
+			queue[++insertion] = queue[operation]->left;
+			queue[++insertion] = queue[operation]->right;
+		}
 	}
-	if (!root->left)
-	{
-		root->left = new_node;
-		new_node->parent = root->left;
-	}
-	else if(root->left && !root->right)
-	{
-		root->right = new_node;
-		new_node->parent = root->right;
-	}
+	
 	return (new_node);
 }
 
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
 	binary_tree_node_t *new;
+	
 
 	if(!data || !heap)
 		return (NULL);
@@ -54,10 +69,12 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	if (!heap->root)
 	{
 		heap->root = new;
+		++heap->size;
 		return (new);
 	}
 	new = insert_bottom_left(heap->root, new);
-	value_check(new);
+	if (new->parent)
+		value_check(heap, new);
 	++heap->size;
 	return(new);
 }
