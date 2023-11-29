@@ -1,7 +1,13 @@
 #include "heap.h"
 
-
-static binary_tree_node_t *node_swap(binary_tree_node_t *parent, binary_tree_node_t *node)
+/**
+ * node_swap - swaps two nodes' data
+ * @parent: pointer to the parent node
+ * @node: pointer to the current node
+ * Return: the current node
+*/
+static binary_tree_node_t *node_swap(binary_tree_node_t *parent,
+										 binary_tree_node_t *node)
 {
 	void *temp;
 
@@ -11,6 +17,12 @@ static binary_tree_node_t *node_swap(binary_tree_node_t *parent, binary_tree_nod
 
 	return (parent);
 }
+/**
+ * value_check - checks if the values are in proper order, calls swap
+ * @heap: pointer to the heap
+ * @node: pointer to the current node
+ * Return: a pointer to the current node
+*/
 
 static binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
 {
@@ -25,8 +37,14 @@ static binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
 	return (node);
 }
 
-
-static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root, binary_tree_node_t *new_node)
+/**
+ * insert_bottom_left - inserts a new node and the lower left most available slot
+ * @root: pointer to the root of a binary tree
+ * @new_node: pointer to the newly created node
+ * Return: pointer to the new node
+*/
+static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root,
+												 binary_tree_node_t *new_node)
 {
 	binary_tree_node_t *queue[100];
 
@@ -56,7 +74,12 @@ static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root, binary_t
 	
 	return (new_node);
 }
-
+/**
+ * heap_insert - inserts a new node into a heap
+ * @heap: pointer to the top of the heap
+ * @data: data to be stored in the new node
+ * Return: pointer to the new node
+*/
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
 	binary_tree_node_t *new;
