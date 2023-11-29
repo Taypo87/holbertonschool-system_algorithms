@@ -27,9 +27,9 @@ static binary_tree_node_t *node_swap(binary_tree_node_t *parent,
 static binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
 {
 
-	while(node->parent)
+	while (node->parent)
 	{
-		if(heap->data_cmp(node->data, node->parent->data) < 0)
+		if (heap->data_cmp(node->data, node->parent->data) < 0)
 			node = node_swap(node->parent, node);
 		else
 			break;
@@ -38,7 +38,7 @@ static binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
 }
 
 /**
- * insert_bottom_left - inserts a new node and the lower left most available slot
+ * insert_bottom_left - inserts a new node and the lower left most available
  * @root: pointer to the root of a binary tree
  * @new_node: pointer to the newly created node
  * Return: pointer to the new node
@@ -53,13 +53,13 @@ static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root,
 	queue[++insertion] = root;
 	for (; ; operation++)
 	{
-		if(!queue[operation]->left)
+		if (!queue[operation]->left)
 		{
 			new_node->parent = queue[operation];
 			queue[operation]->left = new_node;
 			break;
 		}
-		else if(!queue[operation]->right)
+		else if (!queue[operation]->right)
 		{
 			new_node->parent = queue[operation];
 			queue[operation]->right = new_node;
@@ -71,7 +71,7 @@ static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root,
 			queue[++insertion] = queue[operation]->right;
 		}
 	}
-	
+
 	return (new_node);
 }
 /**
@@ -83,11 +83,11 @@ static binary_tree_node_t *insert_bottom_left(binary_tree_node_t *root,
 binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 {
 	binary_tree_node_t *new;
-	
 
-	if(!data || !heap)
+
+	if (!data || !heap)
 		return (NULL);
-	
+
 	new = binary_tree_node(NULL, data);
 	if (!heap->root)
 	{
@@ -99,5 +99,5 @@ binary_tree_node_t *heap_insert(heap_t *heap, void *data)
 	if (new->parent)
 		value_check(heap, new);
 	++heap->size;
-	return(new);
+	return (new);
 }
