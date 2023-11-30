@@ -4,7 +4,7 @@
  * @node: the current node to free
  * @free_data: function that frees the data in a heap node
 */
-static void deleter(binary_tree_node_t* node, void (*free_data)(void *))
+static void deleter(binary_tree_node_t *node, void (*free_data)(void *))
 {
 	if (!node)
 		return;
@@ -13,7 +13,7 @@ static void deleter(binary_tree_node_t* node, void (*free_data)(void *))
 	if (free_data)
 		free_data(node->data);
 	free(node);
-	
+
 }
 /**
  * heap_delete - deletes a heap
