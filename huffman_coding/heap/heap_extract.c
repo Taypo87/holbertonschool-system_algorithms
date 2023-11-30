@@ -98,17 +98,17 @@ static void heapify(heap_t *heap)
 */
 void *heap_extract(heap_t *heap)
 {
-	void *return_value;
+	void *rv;
 	binary_tree_node_t *last;
 
-	return_value = heap->root->data;
+	rv = heap->root->data;
 	last = get_last_node(heap);
 	if (last == heap->root)
 	{
 		heap->root = NULL;
 		heap->size--;
 		free(last);
-		return (return_value);
+		return (rv);
 	}
 	heap->root->data = last->data;
 	if (last == last->parent->left)
@@ -118,6 +118,6 @@ void *heap_extract(heap_t *heap)
 	free(last);
 	heap->size--;
 	heapify(heap);
-	return (return_value);
+	return (rv);
 
 }
