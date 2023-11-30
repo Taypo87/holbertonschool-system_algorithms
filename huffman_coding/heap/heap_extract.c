@@ -6,4 +6,8 @@ void *heap_extract(heap_t *heap)
 
     root = heap->root;
     
+    if (!root)
+        root = NULL;
+
+    return(NULL);
 }
