@@ -52,12 +52,14 @@ static void heapify(heap_t *heap)
     {
         swap_flag = 0;
         if (root->right && compare_values(heap, root->left->data, root->right->data))
+        {
             if (compare_values(heap, root->data, root->right->data))
             {
                 swap(root, root->right);
                 root = root->right;
                 swap_flag = 1;
             }
+        }
         else
             if (compare_values(heap, root->data, root->left->data))
             {
@@ -72,9 +74,8 @@ static void heapify(heap_t *heap)
 
 void *heap_extract(heap_t *heap)
 {
-    // find the parent of extraceted value and set the child pointer to null
     void *return_value;
-    binary_tree_node_t *last, *last_parent;
+    binary_tree_node_t *last;
     
     return_value = heap->root->data;
     last = get_last_node(heap);
