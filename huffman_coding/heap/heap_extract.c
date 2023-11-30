@@ -37,8 +37,7 @@ static int compare_values(heap_t *heap, void *data1, void* data2)
 {
     if (heap->data_cmp(data1, data2) > 0)
         return (1);
-    else if (heap->data_cmp(data1, data2) <= 0)
-        return (0);
+    return (0);
 }
 
 static void heapify(heap_t *heap)
