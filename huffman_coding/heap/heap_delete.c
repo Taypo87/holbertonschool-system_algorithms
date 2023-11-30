@@ -7,11 +7,12 @@
 */
 static void deleter(binary_tree_node_t* node, void (*free_data)(void *))
 {
-    if (node->left)
-        deleter(node->left, free_data);
-    if (node->right)
-        deleter(node->right, free_data);
-    free_data(node->data);
+    if (!node)
+        return;
+    deleter(node->left, free_data);
+    deleter(node->right, free_data);
+    if (free_data)
+        free_data(node->data);
     free(node);
     
 }
