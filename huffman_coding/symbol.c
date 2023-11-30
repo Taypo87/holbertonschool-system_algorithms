@@ -9,6 +9,7 @@
 symbol_t *symbol_create(char data, size_t freq)
 {
 	symbol_t *symbol = calloc(1, sizeof(symbol_t));
+
 	if (!symbol)
 		return (NULL);
 	symbol->data = data;
