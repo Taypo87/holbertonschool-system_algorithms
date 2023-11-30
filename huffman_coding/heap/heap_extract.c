@@ -50,7 +50,7 @@ static void swap(binary_tree_node_t *node1, binary_tree_node_t *node2)
  * @data2: the value to be compared
  * Return: 1 if greater than, else 0
 */
-static int compare_values(heap_t *heap, void *data1, void* data2)
+static int compare_values(heap_t *heap, void *data1, void *data2)
 {
 	if (heap->data_cmp(data1, data2) > 0)
 		return (1);
@@ -87,19 +87,20 @@ static void heapify(heap_t *heap)
 				root = root->left;
 				swap_flag = 1;
 			}
-		if(!swap_flag)
+		if (!swap_flag)
 			break;
 	}
 }
 /**
  * heap_extract - extracts the root node of a heap
  * @heap: pointer to a heap struct
+ * Return: the data from the extracted node
 */
 void *heap_extract(heap_t *heap)
 {
 	void *return_value;
 	binary_tree_node_t *last;
-	
+
 	return_value = heap->root->data;
 	last = get_last_node(heap);
 	if (last == heap->root)
@@ -117,6 +118,6 @@ void *heap_extract(heap_t *heap)
 	free(last);
 	heap->size--;
 	heapify(heap);
-	return(return_value);
+	return (return_value);
 
 }
