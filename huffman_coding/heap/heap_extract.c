@@ -84,6 +84,7 @@ void *heap_extract(heap_t *heap)
     else
         last->parent->right = NULL;
     free(last);
+    heap->size--;
     heapify(heap);
     return(return_value);
 
