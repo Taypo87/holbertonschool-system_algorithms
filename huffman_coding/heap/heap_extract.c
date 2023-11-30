@@ -78,6 +78,13 @@ void *heap_extract(heap_t *heap)
     
     return_value = heap->root->data;
     last = get_last_node(heap);
+    if (last == heap->root)
+    {
+        heap->root = NULL;
+        heap->size--;
+        free(last);
+        return (return_value);
+    }
     heap->root->data = last->data;
     if (last == last->parent->left)
         last->parent->left = NULL;
