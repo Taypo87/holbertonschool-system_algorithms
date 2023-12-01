@@ -8,7 +8,7 @@
 */
 int huffman_extract_and_insert(heap_t *priority_queue)
 {
-	binary_tree_node_t *new_node, *node1, *node2, *nodes;
+	binary_tree_node_t *new_node, *node1, *node2;
 	symbol_t *symbol1, *symbol2, *new_symbol;
 	size_t newfreq;
 
