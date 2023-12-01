@@ -9,10 +9,7 @@
 */
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 {
-	binary_tree_node_t *node;
-	symbol_t *symbol;
 	heap_t *p_queue;
-	size_t i;
 
 	p_queue = huffman_priority_queue(data, freq, size);
 	while (size != 1)
