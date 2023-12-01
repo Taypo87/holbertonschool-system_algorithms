@@ -1,5 +1,6 @@
 #include "huffman.h"
 #include "heap.h"
+
 /**
  * huff_cmp - compares two huffnodes
  * @node1: first node to be compared
@@ -14,7 +15,7 @@ static int huff_cmp(void *node1, void *node2)
 	tree2 = (binary_tree_node_t *)node2;
 	symbol1 = tree1->data;
 	symbol2 = tree2->data;
-	return ((int)symbol1->data - (int)symbol2->data);
+	return ((int)symbol1->freq - (int)symbol2->freq);
 }
 
 /**
