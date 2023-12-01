@@ -41,15 +41,15 @@ static binary_tree_node_t *huff_node_create(char data, size_t freq)
 heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 {
 	heap_t *pqueue;
-	binary_tree_node_t *data;
+	binary_tree_node_t *node;
 	size_t i;
 
 	pqueue = heap_create(huff_cmp);
 
 	for (i = 0; i < size; i++)
 	{
-		data = huff_node_create(data[i], freq[i]);
-		heap_insert(pqueue, data);
+		node = huff_node_create(data[i], freq[i]);
+		heap_insert(pqueue, node);
 	}
 	return (pqueue);
 }
