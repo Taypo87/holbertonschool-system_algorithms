@@ -6,7 +6,7 @@
  * @node: pointer to the current node
  * Return: the current node
 */
-static binary_tree_node_t *node_swap(binary_tree_node_t *parent,
+binary_tree_node_t *node_swap(binary_tree_node_t *parent,
 										 binary_tree_node_t *node)
 {
 	void *temp;
@@ -24,7 +24,7 @@ static binary_tree_node_t *node_swap(binary_tree_node_t *parent,
  * Return: a pointer to the current node
 */
 
-static binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
+binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
 {
 
 	while (node->parent)
