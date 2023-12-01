@@ -5,6 +5,7 @@
  * huff_cmp - compares two huffnodes
  * @node1: first node to be compared
  * @node2: second node to be compared to
+ * Return: the difference between the two
 */
 static int huff_cmp(void *node1, void *node2)
 {
@@ -21,7 +22,7 @@ static int huff_cmp(void *node1, void *node2)
 /**
  * huff_node_create - creates a node for a huffman tree
  * @data: character to be stored in a symbol
- * @size: the frequency of the stored character
+ * @freq: the frequency of the stored character
  * Return: pointer to the newly created node
 */
 static binary_tree_node_t *huff_node_create(char data, size_t freq)
