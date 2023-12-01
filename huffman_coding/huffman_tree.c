@@ -15,6 +15,7 @@ binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
 	while (size != 1)
 	{
 		huffman_extract_and_insert(p_queue);
+		size--;
 	}
 	return (p_queue->root);
 }
