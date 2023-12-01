@@ -2,7 +2,8 @@
 #include "heap.h"
 
 /**
- * huffman_extract_and_insert - extracts 2 nodes, creates an new node with them as children
+ * huffman_extract_and_insert - extracts 2 nodes
+ *             inserts one with them as children
  * @priority_queue: the queue to operate on
  * Return: 1 on success, else 0
 */
@@ -12,7 +13,7 @@ int huffman_extract_and_insert(heap_t *priority_queue)
 	symbol_t *symbol1, *symbol2, *new_symbol;
 	size_t newfreq;
 
-	if(!priority_queue)
+	if (!priority_queue)
 		return (0);
 
 	node1 = heap_extract(priority_queue);
