@@ -5,7 +5,7 @@
  * @heap: pointer to the heap struct
  * Return: pointer to the last node in the heap
 */
-static binary_tree_node_t *get_last_node(const heap_t *heap)
+binary_tree_node_t *get_last_node(const heap_t *heap)
 {
 	binary_tree_node_t *pos = NULL;
 	size_t mask;
@@ -52,7 +52,7 @@ static void swap(binary_tree_node_t *node1, binary_tree_node_t *node2)
 */
 static int compare_values(heap_t *heap, void *data1, void *data2)
 {
-	if (heap->data_cmp(data1, data2) > 0)
+	if (heap->data_cmp(data1, data2) >= 0)
 		return (1);
 	return (0);
 }
@@ -61,7 +61,7 @@ static int compare_values(heap_t *heap, void *data1, void *data2)
  * heapify - fixes the heap after extracting a node
  * @heap: pointer to a heap struct
 */
-static void heapify(heap_t *heap)
+void heapify(heap_t *heap)
 {
 	binary_tree_node_t *root = heap->root;
 	int swap_flag;
