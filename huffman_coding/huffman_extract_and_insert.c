@@ -23,9 +23,9 @@ int huffman_extract_and_insert(heap_t *priority_queue)
 	newfreq = symbol1->freq + symbol2->freq;
 	new_symbol = symbol_create(-1, newfreq);
 	new_node = binary_tree_node(NULL, new_symbol);
-	new_node->left = node1;
+	new_node->right = node1;
 	node1->parent = new_node;
-	new_node->right = node2;
+	new_node->left = node2;
 	node2->parent = new_node;
 	heap_insert(priority_queue, new_node);
 
