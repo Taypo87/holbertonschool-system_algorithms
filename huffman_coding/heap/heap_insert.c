@@ -29,7 +29,7 @@ binary_tree_node_t *value_check(heap_t *heap, binary_tree_node_t *node)
 
 	while (node->parent)
 	{
-		if (heap->data_cmp(node->data, node->parent->data) <= 0)
+		if (heap->data_cmp(node->data, node->parent->data) < 0)
 			node = node_swap(node->parent, node);
 		else
 			break;
