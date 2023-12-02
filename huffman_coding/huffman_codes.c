@@ -10,9 +10,11 @@
 static void huff_codes(binary_tree_node_t *root, char* code, int depth)
 {
 	
-	if (root->left == NULL && root->right == NULL) 
+	if (root->left == NULL && root->right == NULL)
 	{
+		code[depth] = '\0';
 		printf("%s: %s\n", (char *)root->data, code);
+		return;
 	}
 	if (root->left != NULL)
 	{
