@@ -73,18 +73,18 @@ void heapify(heap_t *heap)
 		swap_flag = 0;
 		if (root->right && compare_values(heap, root->left->data, root->right->data))
 		{
-			if (compare_values(heap, root->data, root->right->data))
-			{
-				swap(root, root->right);
-				root = root->right;
-				swap_flag = 1;
-			}
-		}
-		else
 			if (compare_values(heap, root->data, root->left->data))
 			{
 				swap(root, root->left);
 				root = root->left;
+				swap_flag = 1;
+			}
+		}
+		else
+			if (compare_values(heap, root->data, root->right->data))
+			{
+				swap(root, root->right);
+				root = root->right;
 				swap_flag = 1;
 			}
 		if (!swap_flag)
