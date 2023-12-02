@@ -1,6 +1,11 @@
 #include "heap.h"
 #include "huffman.h"
 
+/**
+ * deleter - recursive function that frees data and nodes of a heap
+ * @node: the current node to free
+ * @free_data: function that frees the data in a heap node
+*/
 static void deleter(binary_tree_node_t *node, void (*free_data)(void *))
 {
 	if (!node)
@@ -13,11 +18,12 @@ static void deleter(binary_tree_node_t *node, void (*free_data)(void *))
 
 }
 /**
- * heap_delete - deletes a heap
- * @heap: pointer to a heap struct
+ * huff_delete - deletes a heap
+ * @hufftree: pointer to a heap struct
  * @free_data: function pointer that frees a nodes stored data
 */
-static void huff_delete(binary_tree_node_t *hufftree, void (*free_data)(void *))
+static void huff_delete(binary_tree_node_t *hufftree,
+								 void (*free_data)(void *))
 {
 	deleter(hufftree, free_data);
 }
@@ -29,9 +35,9 @@ static void huff_delete(binary_tree_node_t *hufftree, void (*free_data)(void *))
  * @code: pointer to the code being generated
  * @depth: the index of each code character
 */
-static void huff_codes(binary_tree_node_t *root, char* code, int depth)
+static void huff_codes(binary_tree_node_t *root, char *code, int depth)
 {
-	
+
 	if (root->left == NULL && root->right == NULL)
 	{
 		code[depth] = '\0';
@@ -61,11 +67,11 @@ int huffman_codes(char *data, size_t *freq, size_t size)
 	char codes[64];
 	int depth = 0;
 	binary_tree_node_t *hufftree;
-	
+
 	hufftree = huffman_tree(data, freq, size);
 	if (!hufftree)
 		return (0);
 	huff_codes(hufftree, codes, depth);
 	huff_delete(hufftree, free);
-	return(1);
+	return (1);
 }
