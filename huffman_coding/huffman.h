@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <heap.h>
 #include <strings.h>
+#include <sys/stat.h>
+
+#define CHAR_COUNT 256
 /**
  * struct symbol_s - Stores a char and its associated frequency
  *
@@ -23,5 +26,6 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
 int huffman_extract_and_insert(heap_t *priority_queue);
 binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size);
 int huffman_codes(char *data, size_t *freq, size_t size);
-
+int huff_compression(char **argv);
+int huff_decompression(char **argv);
 #endif

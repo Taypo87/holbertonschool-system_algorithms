@@ -50,6 +50,11 @@ heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size)
 
 	for (i = 0; i < size; i++)
 	{
+		if (freq[i] = 0)
+		{
+			size--;
+			continue;
+		}	
 		node = huff_node_create(data[i], freq[i]);
 		heap_insert(pqueue, node);
 	}
