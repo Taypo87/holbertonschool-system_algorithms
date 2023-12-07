@@ -56,40 +56,38 @@ static int compare_values(heap_t *heap, void *data1, void *data2)
 		return (1);
 	return (0);
 }
+static binary_tree_node_t *min_child(binary_tree_node_t *node, int (*compare_values)(void *, void *))
+{	int result;
 
+	if (!node)
+		return (NULL);
+	if (!node->right)
+		return (node->left);
+	result = compare_values(node->left->data, node->right->data);
+	if (result <= 0)
+		return(node->left);
+	else
+		return(node->right);
+}
 /**
  * heapify - fixes the heap after extracting a node
  * @heap: pointer to a heap struct
 */
 void heapify(heap_t *heap)
 {
-	binary_tree_node_t *root = heap->root;
-	int swap_flag;
+	binary_tree_node_t *pos, *child;
+	void *temp;
 
-	if (!root->left)
-		return;
-	while (root->left)
+	pos = heap->root;
+	child = min_child(pos, compare_values(heap, pos->left->data, pos->right->data));
+
+	while (child && (heap->data_cmp(pos, child) >= 0))
 	{
-		swap_flag = 0;
-		if (root->right && compare_values(heap, root->left->data, root->right->data))
-		{
-			if (compare_values(heap, root->data, root->right->data))
-			{
-				swap(root, root->right);
-				root = root->right;
-				swap_flag = 1;
-			}
-		}
-		else
-			if (compare_values(heap, root->data, root->left->data))
-			{
-				swap(root, root->left);
-				root = root->left;
-				swap_flag = 1;
-			}
-		if (!swap_flag)
-			break;
+		swap(pos, child);
+		pos = child;
+		child = min_child(pos, compare_values);
 	}
+
 }
 /**
  * heap_extract - extracts the root node of a heap
