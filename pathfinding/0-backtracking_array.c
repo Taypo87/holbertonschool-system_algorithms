@@ -33,6 +33,7 @@ static int solve_maze(char **map, int rows, int cols, point_t *current, point_t 
     int directions[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}}, x, y;
     int on_target_path = 0, i;
 
+    printf("Checking coordinates [%d, %d]\n", current->x, current->y);
     visited[(current->y * cols) + current->x] = 1;
     if (current->x == target->x && current->y == target->y)
     {
@@ -41,6 +42,8 @@ static int solve_maze(char **map, int rows, int cols, point_t *current, point_t 
         return (1);
     }
     
+    
+    
     for (i = 0; i < 4; ++i)
     {
         next_move.x = current->x + directions[i][0];
@@ -48,12 +51,12 @@ static int solve_maze(char **map, int rows, int cols, point_t *current, point_t 
         next_move.y = current->y + directions[i][1];
         y = next_move.y;
 
-
         if (is_valid_move(map, rows, cols, &next_move) && !was_visited(visited, cols, x, y))
         {
-            printf("Checking coordinates [%d, %d]\n", current->x, current->y);
             on_target_path += solve_maze(map, rows, cols, &next_move, target, queue, visited);
         }
+        if (on_target_path)
+            break;
     }
     if (on_target_path)
     {
@@ -76,5 +79,7 @@ queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start
     *finish = *target;
     solve_maze(map, rows, cols, current, finish, queue, visited);
     free(visited);
+    free(current);
+    free(finish);
     return (queue);
 }
