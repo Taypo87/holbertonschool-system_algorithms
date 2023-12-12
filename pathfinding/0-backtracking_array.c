@@ -57,7 +57,6 @@ static int solve_maze(char **map, int rows, int cols, point_t *current, point_t 
     }
     if (on_target_path)
     {
-        puts("adding to queue");
         queue_push_front(queue, (void*)point_dup(current));
         return (1);
     }
