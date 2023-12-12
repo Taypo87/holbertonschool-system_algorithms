@@ -12,6 +12,8 @@
 static void print_free_path(queue_t *path)
 {
     printf("Path found:\n");
+    if (!path->front)
+        puts("queue is null");
     while (path->front)
     {
         point_t *point = (point_t *)dequeue(path);
