@@ -19,7 +19,7 @@ static int is_valid_move(char **map, int rows, int cols, point_t *next_move)
     int x, y;
     x = next_move->x;
     y = next_move->y;
-    if (x < rows && x >= 0 && y < cols && y >= 0 && map[x][y] == '0')
+    if (x < rows && x >= 0 && y < cols && y >= 0 && map[y][x] == '0')
         return (1);
     else
         return (0);
@@ -37,7 +37,6 @@ static int solve_maze(char **map, int rows, int cols, point_t *current, point_t 
     {
         next_move_dup = point_dup(current);
         queue_push_front(queue, (void*)next_move_dup);
-        free(visited);
         return (1);
     }
     visited[(current->y * cols) + current->x] = 1;
