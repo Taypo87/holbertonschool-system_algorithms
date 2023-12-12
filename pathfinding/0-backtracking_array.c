@@ -78,6 +78,8 @@ queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start
     *current = *start;
     *finish = *target;
     solve_maze(map, rows, cols, current, finish, queue, visited);
+    if (!queue->front)
+        free(queue);
     free(visited);
     free(current);
     free(finish);
