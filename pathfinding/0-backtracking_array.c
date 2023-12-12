@@ -1,7 +1,7 @@
 #include "pathfinding.h"
 
 
-static int was_visited(unsigned char *visited, int cols, int x, int y)
+static int was_visited(int *visited, int cols, int x, int y)
 {
     return (visited[(y * cols) + x]);
 }
@@ -26,22 +26,22 @@ static int is_valid_move(char **map, int rows, int cols, point_t *next_move)
 }
 
 
-static int solve_maze(char **map, int rows, int cols, point_t *current, point_t *target, queue_t *queue, unsigned char *visited)
+static int solve_maze(char **map, int rows, int cols, point_t *current, point_t *target, queue_t *queue, int *visited)
 {
     point_t next_move, *next_move_dup;
 
     int directions[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}}, x, y;
     int on_target_path = 0, i;
 
+    visited[(current->y * cols) + current->x] = 1;
     if (current->x == target->x && current->y == target->y)
     {
         next_move_dup = point_dup(current);
         queue_push_front(queue, (void*)next_move_dup);
         return (1);
     }
-    visited[(current->y * cols) + current->x] = 1;
+    
     for (i = 0; i < 4; ++i)
-
     {
         next_move.x = current->x + directions[i][0];
         x = next_move.x;
@@ -69,7 +69,7 @@ queue_t *backtracking_array(char **map, int rows, int cols, point_t const *start
     queue_t *queue;
     point_t *current = malloc(sizeof(point_t));
     point_t *finish = malloc(sizeof(point_t));
-    unsigned char *visited = calloc(sizeof(unsigned char), (rows * cols));
+    int *visited = calloc(sizeof(int), (rows * cols));
 
     queue = queue_create();
     *current = *start;
