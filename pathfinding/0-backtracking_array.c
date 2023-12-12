@@ -29,17 +29,20 @@ static int is_valid_move(char **map, int rows, int cols, point_t *next_move)
 static int solve_maze(char **map, int rows, int cols, point_t *current, point_t *target, queue_t *queue, unsigned char *visited)
 {
     point_t next_move, *next_move_dup;
-    int directions[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}}, x, y;
-    int on_target_path = 0;
-    
+
+    int directions[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}}, x, y;
+    int on_target_path = 0, i;
+
     if (current->x == target->x && current->y == target->y)
     {
         next_move_dup = point_dup(current);
         queue_push_front(queue, (void*)next_move_dup);
+        free(visited);
         return (1);
     }
     visited[(current->y * cols) + current->x] = 1;
-    for (int i = 0; i < 4; ++i)
+    for (i = 0; i < 4; ++i)
+
     {
         next_move.x = current->x + directions[i][0];
         x = next_move.x;
