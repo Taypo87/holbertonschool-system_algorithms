@@ -50,7 +50,7 @@ static int find_route(graph_t *graph, params_t *params, queue_t *q, vertex_t *cu
 		{
 			if (find_route(graph, params, q, edge->dest, visited))
 			{
-				queue_push_front(q, (void *)edge->dest->content);
+				queue_push_front(q, (void *)current_node->content);
 				return (1);
 			}
 		}
@@ -73,7 +73,6 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start, vertex_t cons
 
 	params->start = malloc(sizeof(vertex_t));
 	params->target = malloc(sizeof(vertex_t));
-
 	visited_graph = graph_create();
 	q = queue_create();
 	*params->start = *start;
