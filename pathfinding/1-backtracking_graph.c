@@ -6,13 +6,13 @@
  * @visited_graph: graph containing all the visited locations
  * Return: 1 if we been there, else 0
 */
-static int been_there(vertex_t *destination, graph_t *visitid_graph)
+static int been_there(vertex_t *destination, graph_t *visited_graph)
 {
 	size_t i;
 	vertex_t *vertex;
 
-	vertex = visitid_graph->vertices;
-	for (i = 0; i < visitid_graph->nb_vertices; i++)
+	vertex = visited_graph->vertices;
+	for (i = 0; i < visited_graph->nb_vertices; i++)
 	{
 		if (strcmp(destination->content, vertex->content) == 0)
 			return (1);
@@ -86,6 +86,9 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
 	free(params);
 	graph_delete(visited_graph);
 	if (!q->front)
+	{
+		free(q);
 		return (NULL);
+	}
 	return (q);
 }
