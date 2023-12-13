@@ -39,7 +39,7 @@ static int find_route(graph_t *graph, params_t *params, queue_t *q, vertex_t *cu
 	graph_add_vertex(visited, current_node->content, current_node->x, current_node->y);
 	if (strcmp(params->target->content, current_node->content) == 0)
 	{
-		queue_push_front(q, (void *)current_node->content);
+		queue_push_front(q, (void *)strdup(current_node->content));
 		return (1);
 	}
 
@@ -50,7 +50,7 @@ static int find_route(graph_t *graph, params_t *params, queue_t *q, vertex_t *cu
 		{
 			if (find_route(graph, params, q, edge->dest, visited))
 			{
-				queue_push_front(q, (void *)current_node->content);
+				queue_push_front(q, (void *)strdup(current_node->content));
 				return (1);
 			}
 		}
