@@ -3,7 +3,7 @@
 /**
  * been_there - checks if we been there yet or not
  * @destination: the location to check
- * visited_graph: graph containing all the visited locations
+ * @visited_graph: graph containing all the visited locations
  * Return: 1 if we been there, else 0
 */
 static int been_there(vertex_t *destination, graph_t *visitid_graph)
@@ -19,7 +19,7 @@ static int been_there(vertex_t *destination, graph_t *visitid_graph)
 		vertex = vertex->next;
 	}
 	return (0);
-	
+
 }
 
 /**
@@ -31,12 +31,14 @@ static int been_there(vertex_t *destination, graph_t *visitid_graph)
  * @visited: a graph containing all the visited nodes
  * Return: 1 if on path, else 0
 */
-static int find_route(graph_t *graph, params_t *params, queue_t *q, vertex_t *current_node, graph_t *visited)
+static int find_route(graph_t *graph, params_t *params, queue_t *q,
+							 vertex_t *current_node, graph_t *visited)
 {
 	edge_t *edge;
 
 	printf("Checking %s\n", current_node->content);
-	graph_add_vertex(visited, current_node->content, current_node->x, current_node->y);
+	graph_add_vertex(visited, current_node->content,
+					 current_node->x, current_node->y);
 	if (strcmp(params->target->content, current_node->content) == 0)
 	{
 		queue_push_front(q, (void *)strdup(current_node->content));
@@ -65,7 +67,8 @@ static int find_route(graph_t *graph, params_t *params, queue_t *q, vertex_t *cu
  * @target: the target vertex
  * Return: a queue containing the path found
 */
-queue_t *backtracking_graph(graph_t *graph, vertex_t const *start, vertex_t const *target)
+queue_t *backtracking_graph(graph_t *graph, vertex_t const *start,
+											 vertex_t const *target)
 {
 	queue_t *q;
 	graph_t *visited_graph;
@@ -82,5 +85,7 @@ queue_t *backtracking_graph(graph_t *graph, vertex_t const *start, vertex_t cons
 	free(params->target);
 	free(params);
 	graph_delete(visited_graph);
-	return(q);
+	if (!q->front)
+		return (NULL);
+	return (q);
 }

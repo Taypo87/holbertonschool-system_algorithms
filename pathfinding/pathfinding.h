@@ -19,6 +19,11 @@ typedef struct point_s
 	int y;
 } point_t;
 
+/**
+ * struct params_s - stores the start and target paramters
+ * @start: the starting vertex
+ * @target: the target vertex
+*/
 typedef struct params_s
 {
 	vertex_t *start;
