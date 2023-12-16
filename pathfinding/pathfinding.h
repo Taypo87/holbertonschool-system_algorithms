@@ -7,6 +7,7 @@
 #include "queues.h"
 #include <string.h>
 #include <stdbool.h>
+#include "uthash.h"
 
 /**
  * struct point_s - Structure storing coordinates
@@ -31,11 +32,13 @@ typedef struct params_s
 	vertex_t *target;
 } params_t;
 
-typedef struct
+typedef struct city
 {
     char name[100];
+	vertex_t *node;
     int distance;
-	bool visited;
+	bool in_queue;
+	struct city *previous;
     UT_hash_handle hh;
 } city;
 
