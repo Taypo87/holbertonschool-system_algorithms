@@ -13,5 +13,4 @@ void nary_tree_delete(nary_tree_t *tree)
 		nary_tree_delete(tree->next);
 	free(tree->content);
 	free(tree);
-	return;
 }
