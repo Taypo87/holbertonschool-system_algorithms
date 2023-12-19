@@ -20,7 +20,7 @@ static size_t traverse_recurs(nary_tree_t *node, size_t depth, action_t fp)
 	childs = node->children;
 	while (childs)
 	{
-		traverse_recurs(childs, depth+1, fp);
+		traverse_recurs(childs, depth + 1, fp);
 		childs = childs->next;
 	}
 	return (depth);
@@ -33,12 +33,11 @@ static size_t traverse_recurs(nary_tree_t *node, size_t depth, action_t fp)
  * Return: the max depth
 */
 size_t nary_tree_traverse(nary_tree_t const *root,
- void (*action)(nary_tree_t const *node, size_t depth))
+void (*action)(nary_tree_t const *node, size_t depth))
 {
 	action_t fp = action;
 	size_t current_depth = 0;
-	
+
 	current_depth = traverse_recurs((nary_tree_t *)root, current_depth, fp);
 	return (current_depth);
 }
- 
