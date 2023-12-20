@@ -24,8 +24,7 @@ int path_exists(nary_tree_t const *root, char const * const *path)
 			}
 			if (on_path)
 				break;
-			else 
-				temp = temp->next;
+			temp = temp->next;
 		}
 		if (!on_path)
 			return (0);
