@@ -12,7 +12,6 @@ int path_exists(nary_tree_t const *root, char const * const *path)
 	int i, on_path;
 
 	temp = (nary_tree_t *)root;
-	temp = root->children;
 	for  (i = 0 ; path[i]; i++)
 	{
 		on_path = 0;
