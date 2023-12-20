@@ -24,22 +24,22 @@ static size_t get_height(nary_tree_t *root, size_t *diameter)
 
 	temp = root->children;
 	while (temp != NULL) {
-		int childHeight = findHeight(temp->children, diameter);
+		int childHeight = get_height(temp->children, diameter);
 
-		if (childHeight > maxHeight1) {
+		if (childHeight > maxHeight1) 
+		{
 			maxHeight2 = maxHeight1;
 			maxHeight1 = childHeight;
-		} else if (childHeight > maxHeight2) {
+		}
+		else if (childHeight > maxHeight2)
+		{
 			maxHeight2 = childHeight;
 		}
-
 		temp = temp->next;
 	}
-
-	// Update diameter at this node
 	*diameter = max(*diameter, maxHeight1 + maxHeight2);
 
-	return maxHeight1 + 1;
+	return (maxHeight1 + 1);
 }
 
 /**
@@ -50,6 +50,7 @@ static size_t get_height(nary_tree_t *root, size_t *diameter)
 size_t nary_tree_diameter(nary_tree_t const *root)
 {
 	size_t diameter = 0;
+
 	get_height((nary_tree_t *)root, &diameter);
 	return (diameter);
 
