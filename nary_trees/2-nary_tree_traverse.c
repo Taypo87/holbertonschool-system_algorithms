@@ -12,6 +12,7 @@ typedef void (*action_t)(const nary_tree_t *node, size_t depth);
 static size_t traverse_recurs(nary_tree_t *node, size_t depth, action_t fp)
 {
 	nary_tree_t *childs;
+	size_t child_depth, max_depth = 0;
 
 	if (!node)
 		return (depth);
@@ -20,10 +21,12 @@ static size_t traverse_recurs(nary_tree_t *node, size_t depth, action_t fp)
 	childs = node->children;
 	while (childs)
 	{
-		traverse_recurs(childs, depth + 1, fp);
+		child_depth = traverse_recurs(childs, depth + 1, fp);
 		childs = childs->next;
+		if (child_depth > max_depth)
+			max_depth = child_depth;
 	}
-	return (depth);
+	return (max_depth);
 }
 
 /**
