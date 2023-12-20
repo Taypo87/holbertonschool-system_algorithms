@@ -20,7 +20,8 @@ static size_t get_height(nary_tree_t *root, size_t *diameter)
 {
 	int maxHeight1 = 0, maxHeight2 = 0;
 	nary_tree_t *temp;
-	if (root == NULL) return 0;
+	if (root == NULL)
+		return (0);
 
 	temp = root->children;
 	while (temp != NULL) {
@@ -49,7 +50,7 @@ static size_t get_height(nary_tree_t *root, size_t *diameter)
 */
 size_t nary_tree_diameter(nary_tree_t const *root)
 {
-	size_t diameter = 0;
+	size_t diameter = 1;
 
 	get_height((nary_tree_t *)root, &diameter);
 	return (diameter);
