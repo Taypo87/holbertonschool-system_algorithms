@@ -11,36 +11,26 @@ static size_t max(size_t x, size_t y)
 	return (x > y ? x : y);
 }
 /**
- * get_height - gets the path lenght of a given node
+ * get_height - gets the height of a given node
  * @root: root node of an nary tree
  * @diameter: pointer containing the diameter
  * Return: the diamter
 */
-static size_t get_height(nary_tree_t *root, size_t *diameter)
+static size_t get_height(nary_tree_t *root)
 {
-	int maxHeight1 = 0, maxHeight2 = 0;
+	size_t max_height = 0, h = 0;
 	nary_tree_t *temp;
-	if (root == NULL)
+
+	if (!root)
 		return (0);
-
-	temp = root->children;
-	while (temp != NULL) {
-		int childHeight = get_height(temp->children, diameter);
-
-		if (childHeight > maxHeight1) 
-		{
-			maxHeight2 = maxHeight1;
-			maxHeight1 = childHeight;
-		}
-		else if (childHeight > maxHeight2)
-		{
-			maxHeight2 = childHeight;
-		}
-		temp = temp->next;
+	
+	for (temp = root->children; temp; temp = temp->children)
+	{
+		h = get_height(temp);
+		if (h > max_height)
+			max_height = h;
 	}
-	*diameter = max(*diameter, maxHeight1 + maxHeight2);
-
-	return (maxHeight1 + 1);
+	return (max_height + 1);
 }
 
 /**
@@ -50,9 +40,45 @@ static size_t get_height(nary_tree_t *root, size_t *diameter)
 */
 size_t nary_tree_diameter(nary_tree_t const *root)
 {
-	size_t diameter = 1;
+	size_t diameter = 1, *top_two, temp = 0;
+	size_t root_diameter = 0, sub_diameter = 0;
+	nary_tree_t *childs;
 
-	get_height((nary_tree_t *)root, &diameter);
-	return (diameter);
+	if (!root)
+		return (0);
+	childs = (nary_tree_t *)root->children;
+	for (;childs ; childs = childs->next);
+	{
+		temp = get_height(childs);
+		top_two = update_top_two(temp);
+	}	
+	root_diameter = top_two[0] + top_two[1] + 1;
+	childs = (nary_tree_t *)root->children;
+	for (;childs ; childs = childs->next)
+	{
+		temp = nary_tree_diameter((nary_tree_t const *)childs);
+		if (sub_diameter < temp)
+			sub_diameter = temp;
+	}
+	return (diameter > sub_diameter ? diameter : sub_diameter);
+}
+/**
+ * update_top_two - updates top_two array with the greatest heights
+ * @height: the height to check against the current top two heights
+ * Return: the top two heights
+*/
+static size_t *update_top_two(size_t height)
+{
+	static size_t top_two[2] = {0}, temp = 0;
 
+
+	if (temp > top_two[1])
+		top_two[1] = temp;
+	if (top_two[1] > top_two[0])
+	{
+		temp = top_two[0];
+		top_two[0] = top_two[1];
+		top_two[1] = temp;
+	}
+	return (&top_two);
 }
