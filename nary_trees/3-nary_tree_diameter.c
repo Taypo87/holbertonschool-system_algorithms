@@ -3,7 +3,6 @@
 /**
  * get_height - gets the height of a given node
  * @root: root node of an nary tree
- * @diameter: pointer containing the diameter
  * Return: the diamter
 */
 static size_t get_height(nary_tree_t *root)
@@ -13,7 +12,7 @@ static size_t get_height(nary_tree_t *root)
 
 	if (!root)
 		return (0);
-	
+
 	for (temp = root->children; temp; temp = temp->children)
 	{
 		h = get_height(temp);
@@ -51,7 +50,7 @@ size_t nary_tree_diameter(nary_tree_t const *root)
 	}
 	root_diameter = top_two[0] + top_two[1] + 1;
 	childs = (nary_tree_t *)root->children;
-	for (;childs ; childs = childs->next)
+	for (; childs ; childs = childs->next)
 	{
 		temp = nary_tree_diameter((nary_tree_t const *)childs);
 		if (sub_diameter < temp)
