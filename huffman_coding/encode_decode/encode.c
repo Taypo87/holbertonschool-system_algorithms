@@ -58,9 +58,11 @@ int huff_compression(char **argv)
 {
     int frequencies[CHAR_COUNT] = {0};
     char char_array[CHAR_COUNT];
+    huffarray_t *huffarray;
 
     build_arrays(argv, &frequencies, &char_array);
-    huffman_tree(&char_array, &frequencies, CHAR_COUNT);
+    huffarray = convert_array(&char_array, &frequencies);
+    huffman_tree(huffarray);
     //
     
 }
