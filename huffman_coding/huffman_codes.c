@@ -35,24 +35,27 @@ static void huff_delete(binary_tree_node_t *hufftree,
  * @code: pointer to the code being generated
  * @depth: the index of each code character
 */
-static void huff_codes(binary_tree_node_t *root, char *code, int depth)
+static void huff_codes(binary_tree_node_t *root, huffcodes_t *hc, char *code, int depth)
 {
+	unsigned char current_char;
 
 	if (root->left == NULL && root->right == NULL)
 	{
 		code[depth] = '\0';
-		printf("%s: %s\n", (char *)root->data, code);
+		current_char = (unsigned char)root->data;
+		hc[current_char].character = (char)root->data;
+        strcpy(hc[current_char].code, code);
 		return;
 	}
 	if (root->left != NULL)
 	{
 		code[depth] = '0';
-		huff_codes(root->left, code, depth + 1);
+		huff_codes(root->left, hc, code, depth + 1);
 	}
 	if (root->right != NULL)
 	{
 		code[depth] = '1';
-		huff_codes(root->right, code, depth + 1);
+		huff_codes(root->right, hc, code, depth + 1);
 	}
 }
 /**
@@ -62,16 +65,17 @@ static void huff_codes(binary_tree_node_t *root, char *code, int depth)
  * @size: size of data and freq arrays
  * Return: 1 on success, else 0
 */
-int huffman_codes(char *data, size_t *freq, size_t size)
+int huffman_codes(huffarray_t *ha)
 {
-	char codes[64];
+	char codes[32];
 	int depth = 0;
 	binary_tree_node_t *hufftree;
+	huffcodes_t *hc[CHAR_COUNT] = {{0}};
 
-	hufftree = huffman_tree(data, freq, size);
+	hufftree = huffman_tree(ha);
 	if (!hufftree)
 		return (0);
-	huff_codes(hufftree, codes, depth);
+	huff_codes(hufftree, hc, codes, depth);
 	huff_delete(hufftree, free);
 	return (1);
 }

@@ -46,7 +46,6 @@ static huffarray_t *convert_array(char *char_array, int *freqs)
     return (huffarray);
 }
 
-
 // we need to build a hufftree, but to do that we need to build
 //      two arrays, char and freq.
 // these two arrays are passed to our functions from earlier
@@ -63,6 +62,6 @@ int huff_compression(char **argv)
     build_arrays(argv, &frequencies, &char_array);
     huffarray = convert_array(&char_array, &frequencies);
     huffman_tree(huffarray);
-    //
+
     
 }

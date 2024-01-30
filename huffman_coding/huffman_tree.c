@@ -8,12 +8,12 @@
  * @size: size of data and freq and tree
  * Return: pointer to the root of the huffman tree
 */
-binary_tree_node_t *huffman_tree(char *data, size_t *freq, size_t size)
+binary_tree_node_t *huffman_tree(huffarray_t *ha)
 {
 	heap_t *p_queue;
 	binary_tree_node_t *temp;
 
-	p_queue = huffman_priority_queue(data, freq, size);
+	p_queue = huffman_priority_queue(ha->characters, ha->frequencies, ha->size);
 	if (!p_queue)
 		return (NULL);
 	while (p_queue->size > (size_t)1)

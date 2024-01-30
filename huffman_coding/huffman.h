@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 
 #define CHAR_COUNT 256
+#define CODE_MAX 32
 /**
  * struct symbol_s - Stores a char and its associated frequency
  *
@@ -24,8 +25,15 @@ typedef struct huffarray_s
 {
     char *characters;
     int *frequencies;
+    huffcodes_t *code_array;
     int size;
 } huffarray_t;
+
+typedef struct huffcodes_s
+{
+    char character;
+    char code[CODE_MAX];
+} huffcodes_t;
 
 
 
@@ -33,7 +41,7 @@ symbol_t *symbol_create(char data, size_t freq);
 heap_t *huffman_priority_queue(char *data, size_t *freq, size_t size);
 int huffman_extract_and_insert(heap_t *priority_queue);
 binary_tree_node_t *huffman_tree(huffarray_t *ha);
-int huffman_codes(char *data, size_t *freq, size_t size);
+int huffman_codes(huffarray_t *ha);
 int huff_compression(char **argv);
 int huff_decompression(char **argv);
 #endif
